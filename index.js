@@ -20,6 +20,26 @@ bot.command("batch_wise_members_total_amount", async (ctx) => {
   }
 });
 
+bot.command("batch_wise_members_total_amount_not_received", async (ctx) => {
+  try {
+    const response = await api.get("/campaigns/stats/batchWise/notReceived");
+
+    ctx.reply(response.data);
+  } catch (error) {
+    ctx.reply("Sorry! some thing went wrong!");
+  }
+});
+
+bot.command("toppers", async (ctx) => {
+  try {
+    const response = await api.get("/campaigns/stats/toppers");
+
+    ctx.reply(response.data);
+  } catch (error) {
+    ctx.reply("Sorry! some thing went wrong!");
+  }
+});
+
 bot.launch();
 
 // Enable graceful stop
