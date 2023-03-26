@@ -8,7 +8,8 @@ const api = new axios.create({
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
-bot.hears(["Hi", "hi"], (ctx) => ctx.reply("Hey there!"));
+bot.hears(["Hi", "hi"], (ctx) => ctx.reply("Assalamu alaikum!"));
+bot.hears(["Assalamu alaikum", "السلام عليكم"], (ctx) => ctx.reply("Wa alaikumussalam!"));
 
 function splitMessage(response) {
   if(response) {
@@ -77,6 +78,21 @@ bot.command("batch_wise_members_total_amount_not_received", async (ctx) => {
 bot.command("toppers", async (ctx) => {
   try {
     const response = await api.get("/campaigns/stats/toppers");
+    const data = response.data;
+
+    if(data) {
+      handleSplitMessage(ctx, data);
+    }
+
+  } catch (error) {
+    console.log(error);
+    ctx.reply("Sorry! some thing went wrong!");
+  }
+});
+
+bot.command('target', async (ctx) => {
+  try {
+    const response = await api.get("/campaigns/stats/target");
     const data = response.data;
 
     if(data) {
